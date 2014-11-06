@@ -40,7 +40,7 @@ public class ExceptionUtils {
 	 * 
 	 * can someone prematurely exit the program using this?  
 	 */
-	private static void failChemistry (){
+	public static void failChemistry (){
 		System.out.println("F");
 		System.exit(0);//what status to exit with?
 	}
