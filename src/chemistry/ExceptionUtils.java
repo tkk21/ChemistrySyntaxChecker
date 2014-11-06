@@ -2,6 +2,8 @@ package chemistry;
 
 /**
  * a class with static methods to check for exceptions
+ * 
+ * This is the only place where F will be printed to console
  * @author Ted Kim
  * @email tkk21@case.edu
  *
