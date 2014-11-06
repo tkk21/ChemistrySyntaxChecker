@@ -19,6 +19,10 @@ public class ChemistrySyntaxCheckerTest {
 		
 	}
 	@Test
+	public void testParenthesis() {
+		c.checkSyntax("(H)");
+	}
+	@Test
 	public void testSpecialCharacter() {
 
 		c.checkSyntax("$H 2");
