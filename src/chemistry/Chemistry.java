@@ -55,6 +55,21 @@ public class Chemistry {
 	 */
 
 	public static void main(String [] args){
+		/**
+		 * sanitize the input before using it in the code
+		 * 
+		 * some error handling architecture
+		 * 
+		 * if the argument has some spaces, simply remove them
+		 * 
+		 * if the entire input string cannot be split into individual elements, sysout F
+		 * then throw illegal element exception
+		 * 
+		 * if there is an unclosed parenthesis or closed parenthesis without opening,
+		 * sysout F then throw illegal parenthesis exception
+		 * 
+		 * 
+		 */
 		//sysout "T" if syntax is correct
 		//sysout "F" is syntax is incorrect
 
