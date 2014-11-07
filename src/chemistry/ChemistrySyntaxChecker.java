@@ -8,20 +8,31 @@ package chemistry;
  */
 public class ChemistrySyntaxChecker {
 
-	public enum ChemistryCharacterStatus{
+	/**
+	 * enum of the possible characters in a chemical molecule
+	 * used to record what character was in the string
+	 * @author ted
+	 *
+	 */
+	public enum ChemicalCharacter{
 		openParenthesis, closedParenthesis, 
 		upperLetter, lowerLetter, number;
 
-		public static ChemistryCharacterStatus getCharacterClassification(char c){
+		/**
+		 * takes in a character and returns what the character is in terms of chemical character
+		 * @param c	the character to convert
+		 * @return	the chemical character enum version
+		 */
+		public static ChemicalCharacter getCharacterClassification(char c){
 			String s = ""+c;
 			if (s.matches(UPPER_LETTER)){
-				return ChemistryCharacterStatus.upperLetter;
+				return ChemicalCharacter.upperLetter;
 			}
 			if (s.matches(LOWER_LETTER)){
-				return ChemistryCharacterStatus.lowerLetter;
+				return ChemicalCharacter.lowerLetter;
 			}
 			if (s.matches(NUMBER)){
-				return ChemistryCharacterStatus.number;
+				return ChemicalCharacter.number;
 			}
 			else {
 				return getParenthesisClassification(s);
@@ -29,12 +40,17 @@ public class ChemistrySyntaxChecker {
 
 		}
 
-		private static ChemistryCharacterStatus getParenthesisClassification(String s){
+		/**
+		 * a helper method that converts parenthesis character into chemical character
+		 * @param s	the string representing the character to convert
+		 * @return	the chemical character enum version
+		 */
+		private static ChemicalCharacter getParenthesisClassification(String s){
 			if (s.matches(OPEN_PARENTHESIS)){
-				return ChemistryCharacterStatus.openParenthesis;
+				return ChemicalCharacter.openParenthesis;
 			}
 			if (s.matches(CLOSED_PARENTHESIS)){
-				return ChemistryCharacterStatus.closedParenthesis;
+				return ChemicalCharacter.closedParenthesis;
 			}
 			else{
 				return null;//in case user somehow bypasses the barricade
@@ -42,8 +58,11 @@ public class ChemistrySyntaxChecker {
 		}
 	}
 
-	private ChemistryCharacterStatus beforeCharacter;
-	private int parenthesisCount;
+	/**a field storing what chemical character came before*/
+	private ChemicalCharacter beforeCharacter;
+	/**a field that counts the number of parenthesis that remain open*/
+	private int openParenthesisCount;
+	/**a field that counts the number of letter encountered in an element*/
 	private int letterCount;
 
 	public static final String LOWER_LETTER = "[a-z]";
@@ -63,8 +82,8 @@ public class ChemistrySyntaxChecker {
 	 * 
 	 */
 	public ChemistrySyntaxChecker () {
-		beforeCharacter = ChemistryCharacterStatus.upperLetter;
-		parenthesisCount = 0;
+		beforeCharacter = ChemicalCharacter.upperLetter;
+		openParenthesisCount = 0;
 		letterCount = 0;
 	}
 
@@ -82,7 +101,7 @@ public class ChemistrySyntaxChecker {
 				Chemistry.failChemistry();
 			}
 		}
-		if (parenthesisCount>0){
+		if (openParenthesisCount>0){
 			try {
 				throw new IllegalParenthesisException();
 			} 
@@ -131,13 +150,14 @@ public class ChemistrySyntaxChecker {
 	
 	
 	private void upperLetterCase(char c) {
+		letterCount=1;
 		updateBeforeLetterStatus(c);
 	}
 
 	private void lowerLetterCase(char c) throws IllegalElementException {
 		//post processing of lower letter count
 		letterCount++;
-		if (letterCount>2){
+		if (letterCount>3){
 			throw new IllegalElementException();
 		}
 		updateBeforeLetterStatus(c);
@@ -176,7 +196,7 @@ public class ChemistrySyntaxChecker {
 	private void openParenthesisCase(char c)
 			throws IllegalElementException {
 		String s = "" + c;
-		parenthesisCount++;
+		openParenthesisCount++;
 		if (s.matches(UPPER_LETTER+"|"+NUMBER+"|"+OPEN_PARENTHESIS)){
 			updateBeforeLetterStatus(c);
 		}
@@ -188,8 +208,8 @@ public class ChemistrySyntaxChecker {
 	private void closedParenthesisCase(char c)
 			throws IllegalParenthesisException, IllegalElementException {
 		String s = "" + c;
-		parenthesisCount--;
-		if (parenthesisCount<0){
+		openParenthesisCount--;
+		if (openParenthesisCount<0){
 			throw new IllegalParenthesisException();
 		}
 		if (s.matches(UPPER_LETTER+"|"+NUMBER+"|"+OPEN_PARENTHESIS+"|"+CLOSED_PARENTHESIS)){
@@ -201,7 +221,7 @@ public class ChemistrySyntaxChecker {
 	}
 	
 	private void updateBeforeLetterStatus(char c) {
-		beforeCharacter = ChemistryCharacterStatus.getCharacterClassification(c);
+		beforeCharacter = ChemicalCharacter.getCharacterClassification(c);
 	}
 
 	private String sanitize(String s) {
