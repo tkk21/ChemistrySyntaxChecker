@@ -164,13 +164,21 @@ public class ChemicalSyntaxChecker {
 	/**
 	 * the case for upper letter
 	 * resets letter count to 1 since this upper letter is a letter too
-	 * @param c	the current character to update the before letter for the next iteration
+	 * @param c	the character for the next iteration
 	 */
 	private void upperLetterCase(char c) {
 		letterCount=1;
 		updateBeforeLetterStatus(c);
 	}
 
+	/**
+	 * The case for lower letter
+	 * Increments the letter count by 1
+	 * If the letter count exceeds 3,
+	 * then an illegal element exception is thrown
+	 * @param c	the character for the next iteration
+	 * @throws IllegalElementException
+	 */
 	private void lowerLetterCase(char c) throws IllegalElementException {
 		//post processing of lower letter count
 		letterCount++;
