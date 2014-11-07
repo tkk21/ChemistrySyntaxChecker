@@ -107,6 +107,11 @@ public class ChemistrySyntaxChecker {
 		for (int i = 0; i<s.length(); i++){
 			processChemistrySyntax(s.charAt(i));
 		}
+		/**
+		 * so that the very last character is processed
+		 * the character input is irrelevant since it only gets saved as beforeCharacter but nothing is done to it
+		 */
+		processChemistrySyntax('a');
 		if (openParenthesisCount>0){
 			throw new IllegalParenthesisException();
 		}
