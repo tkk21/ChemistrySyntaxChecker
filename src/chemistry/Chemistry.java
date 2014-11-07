@@ -47,7 +47,7 @@ public class Chemistry {
 			failChemistry();
 			return;
 		}
-		ChemistrySyntaxChecker check = new ChemistrySyntaxChecker();
+		ChemicalSyntaxChecker check = new ChemicalSyntaxChecker();
 		try {
 			check.checkSyntax(args[0]);
 		} catch (IllegalElementException e) {

@@ -6,7 +6,7 @@ package chemistry;
  * @author ted
  *
  */
-public class ChemistrySyntaxChecker {
+public class ChemicalSyntaxChecker {
 
 	/**
 	 * enum of the possible characters in a chemical molecule
@@ -88,7 +88,7 @@ public class ChemistrySyntaxChecker {
 	 * the parenthesis syntax checker separately handles that.
 	 * Thus, before character is initialized as upperLetter
 	 */
-	public ChemistrySyntaxChecker () {
+	public ChemicalSyntaxChecker () {
 		beforeCharacter = ChemicalCharacter.upperLetter;
 		openParenthesisCount = 0;
 		letterCount = 0;
@@ -105,13 +105,13 @@ public class ChemistrySyntaxChecker {
 	public void checkSyntax(String s) throws IllegalElementException, IllegalParenthesisException {
 		s = sanitize(s);
 		for (int i = 0; i<s.length(); i++){
-			processChemistrySyntax(s.charAt(i));
+			processChemicalSyntax(s.charAt(i));
 		}
 		/**
 		 * so that the very last character is processed
 		 * the character input is irrelevant since it only gets saved as beforeCharacter but nothing is done to it
 		 */
-		processChemistrySyntax('A');
+		processChemicalSyntax('A');
 		if (openParenthesisCount>0){
 			throw new IllegalParenthesisException();
 		}
@@ -127,7 +127,7 @@ public class ChemistrySyntaxChecker {
 	 * @throws IllegalElementException	thrown if this character is the 4th character in an element
 	 * @throws IllegalParenthesisException	thrown if this character closes parenthesis when there isn't an open parenthesis
 	 */
-	private void processChemistrySyntax(char c) throws IllegalElementException, IllegalParenthesisException{
+	private void processChemicalSyntax(char c) throws IllegalElementException, IllegalParenthesisException{
 		switch(beforeCharacter){
 		//anything allowed
 

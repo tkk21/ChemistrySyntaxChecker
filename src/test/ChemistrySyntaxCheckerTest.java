@@ -7,18 +7,18 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import chemistry.ChemistrySyntaxChecker;
+import chemistry.ChemicalSyntaxChecker;
 import chemistry.IllegalElementException;
 import chemistry.IllegalParenthesisException;
 
 public class ChemistrySyntaxCheckerTest {
 
 	
-	ChemistrySyntaxChecker c;
+	ChemicalSyntaxChecker c;
 	
 	@Before
 	public void init(){
-		c = new ChemistrySyntaxChecker();
+		c = new ChemicalSyntaxChecker();
 		
 	}
 	@Test
