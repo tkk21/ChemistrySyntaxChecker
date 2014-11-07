@@ -89,7 +89,7 @@ public class ChemicalSyntaxChecker {
 	 * Thus, before character is initialized as upperLetter
 	 */
 	public ChemicalSyntaxChecker () {
-		beforeCharacter = ChemicalCharacter.upperLetter;
+		beforeCharacter = ChemicalCharacter.number;
 		openParenthesisCount = 0;
 		letterCount = 0;
 	}
