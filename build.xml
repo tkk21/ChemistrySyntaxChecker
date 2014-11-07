@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project basedir="." default="all" name="Chemistry">
+<project basedir="." default="run" name="Chemistry">
 	<property environment="env"/>
 	<property name="junit.output.dir" value="junit"/>
 	<property name="debuglevel" value="source,lines,vars"/>
@@ -13,9 +13,6 @@
 		<pathelement location="bin"/> <!-- where do we put compiled bits? -->
 		<path refid="JUnit 4.libraryclasspath"/>
 	</path>
-	
-	<target name="all" depends="build,clean">
-	</target>
 	
 	<target name="build">
 		<mkdir dir="bin"/>
@@ -34,7 +31,7 @@
             <classpath refid="Chemistry.classpath"/> <!-- so we can find our compiled bits! -->
         </java>
     </target>
-	<target name="test">
+	<target name="test" depends="build">
 	    <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
             <formatter type="xml"/>
