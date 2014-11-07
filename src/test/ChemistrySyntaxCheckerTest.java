@@ -28,13 +28,22 @@ public class ChemistrySyntaxCheckerTest {
 	
 	@Test
 	public void testIllegalElement_NumberCase() throws IllegalElementException, IllegalParenthesisException {
-		c.checkSyntax("H2o");
+		try{
+			c.checkSyntax("H2o");
+			fail("should have thrown an illegal element exception");
+		}
+		catch(IllegalElementException e){
+		}
 	}
 	
 	@Test
 	public void testSpecialCharacter() throws IllegalElementException, IllegalParenthesisException {
-
+		try{
 		c.checkSyntax("$H 2");
+		fail("should have thrown an illegal element exception");
+		}
+		catch(IllegalElementException e){
+		}
 	}
 	
 	@Test
@@ -44,6 +53,11 @@ public class ChemistrySyntaxCheckerTest {
 	
 	@Test
 	public void testEdge() throws IllegalElementException, IllegalParenthesisException {
-		c.checkSyntax("Cooo");
+		try{
+			c.checkSyntax("Cooo");
+			fail("should have thrown an illegal element exception");
+		}
+		catch(IllegalElementException e){
+		}
 	}
 }
