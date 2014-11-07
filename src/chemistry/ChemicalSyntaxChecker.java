@@ -189,7 +189,7 @@ public class ChemicalSyntaxChecker {
 		//post processing of lower letter count
 		letterCount++;
 		if (letterCount>3){
-			throw new IllegalElementException();
+			throw new IllegalElementException("Element with length greater than 3");
 		}
 		updateBeforeLetterStatus(c);
 	}
@@ -205,7 +205,7 @@ public class ChemicalSyntaxChecker {
 			updateBeforeLetterStatus(c);
 		}
 		else{
-			throw new IllegalElementException();
+			throw new IllegalElementException("Lower case letter after a number");
 		}
 	}
 	
@@ -249,7 +249,7 @@ public class ChemicalSyntaxChecker {
 			updateBeforeLetterStatus(c);
 		}
 		else{
-			throw new IllegalElementException();
+			throw new IllegalElementException("Illegal character after an open parenthesis");
 		}
 	}
 	
@@ -267,13 +267,13 @@ public class ChemicalSyntaxChecker {
 		String s = "" + c;
 		openParenthesisCount--;
 		if (openParenthesisCount<0){
-			throw new IllegalParenthesisException();
+			throw new IllegalParenthesisException("Tried to close a parenthesis when there was not an open parenthesis");
 		}
 		if (s.matches(UPPER_LETTER+"|"+NUMBER+"|"+OPEN_PARENTHESIS+"|"+CLOSED_PARENTHESIS)){
 			updateBeforeLetterStatus(c);
 		}
 		else{
-			throw new IllegalElementException();
+			throw new IllegalElementException("Illegal character after a closed parenthesis");
 		}
 	}
 
