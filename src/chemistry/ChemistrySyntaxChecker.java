@@ -111,7 +111,7 @@ public class ChemistrySyntaxChecker {
 		 * so that the very last character is processed
 		 * the character input is irrelevant since it only gets saved as beforeCharacter but nothing is done to it
 		 */
-		processChemistrySyntax('a');
+		processChemistrySyntax('A');
 		if (openParenthesisCount>0){
 			throw new IllegalParenthesisException();
 		}
