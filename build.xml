@@ -27,7 +27,7 @@
         <delete dir="bin"/>
     </target>
 	<target name="run" depends="build">
-        <java classname="Chemistry" failonerror="true" fork="yes">
+        <java classname="chemistry.Chemistry" failonerror="true" fork="yes">
             <classpath refid="Chemistry.classpath"/> <!-- so we can find our compiled bits! -->
         </java>
     </target>
