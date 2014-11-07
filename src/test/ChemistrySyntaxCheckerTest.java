@@ -150,7 +150,46 @@ public class ChemistrySyntaxCheckerTest {
 			fail();
 		}
 	}
+
+	@Test
+	public void testMultipleElement_multipleSameElement(){
+		try{
+			c.checkSyntax("CCCC");
+		}
+		catch(Exception e){
+			fail();
+		}
+	}
 	
+	@Test
+	public void testMultipleElement_multipleDifferentElement(){
+		try{
+			c.checkSyntax("QWERTY");
+		}
+		catch(Exception e){
+			fail();
+		}
+	}
+	
+	@Test
+	public void testMultipleElement_withNumbersInBetween(){
+		try{
+			c.checkSyntax("8Q3W5E8R5T35Y");
+		}
+		catch(Exception e){
+			fail();
+		}
+	}
+	
+	@Test
+	public void testMultipleElement_withNumbersInBetween_large(){
+		try{
+			c.checkSyntax("8123412Q312412W521412E821412R512412T3124125Y");
+		}
+		catch(Exception e){
+			fail();
+		}
+	}
 	@Test
 	public void testParenthesis() throws IllegalElementException, IllegalParenthesisException {
 		try{
@@ -158,6 +197,16 @@ public class ChemistrySyntaxCheckerTest {
 		}
 		catch(Exception e){
 			fail();
+		}
+	}
+	
+	@Test
+	public void testUnclosedParenthesis() throws IllegalElementException{
+		try{
+			c.checkSyntax("((H)");
+			fail("uncaught illegal parenthesis exception");
+		}
+		catch(IllegalParenthesisException e){
 		}
 	}
 	
