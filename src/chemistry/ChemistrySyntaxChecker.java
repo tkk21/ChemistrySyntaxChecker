@@ -87,27 +87,13 @@ public class ChemistrySyntaxChecker {
 		letterCount = 0;
 	}
 
-	public void checkSyntax(String s) {
+	public void checkSyntax(String s) throws IllegalElementException, IllegalParenthesisException {
 		s = sanitize(s);
-
 		for (int i = 0; i<s.length(); i++){
-			try {
-				processChemistrySyntax(s.charAt(i));
-			} 
-			catch (IllegalElementException e) {
-				Chemistry.failChemistry();
-			}
-			catch (IllegalParenthesisException e){
-				Chemistry.failChemistry();
-			}
+			processChemistrySyntax(s.charAt(i));
 		}
 		if (openParenthesisCount>0){
-			try {
-				throw new IllegalParenthesisException();
-			} 
-			catch (IllegalParenthesisException e) {
-				Chemistry.failChemistry();
-			}
+			throw new IllegalParenthesisException();
 		}
 	}
 

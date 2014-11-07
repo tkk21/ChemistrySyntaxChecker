@@ -48,7 +48,15 @@ public class Chemistry {
 			return;
 		}
 		ChemistrySyntaxChecker check = new ChemistrySyntaxChecker();
-		check.checkSyntax(args[0]);
+		try {
+			check.checkSyntax(args[0]);
+		} catch (IllegalElementException e) {
+			failChemistry();
+			return;
+		} catch (IllegalParenthesisException e) {
+			failChemistry();
+			return;
+		}
 		System.out.println("T");//went through the syntax check without failing
 	}
 	
