@@ -4,23 +4,34 @@ other characters are simply removed
 2. All exceptions thrown in the syntax checker class are propagated until the
 main method in the Chemistry class.
 Then they are caught, F is printed, and program exits
-3. 
+3. When there are no errors, T is printed
+
+4. Because an enum is used to store what type of chemical character a character is,
+any illegal characters that might have slipped after sanitizing will be caught.
+*error barricade
+
 
 DEFENSIVE PROGRAMMING checklist
 General
 Does the routine protect itself from bad input data?
 -User's raw input is sanitized so that only a certain range of characters remain
 Have you used assertions to document assumptions, including preconditions and postconditions?
--
+-the individual cases have assertions to make sure assumptions are correct
 Have assertions been used only to document conditions that should never occur?
+-yes, beforeCharacter should never be null, but that is checked in updateBeforeLetter
 Does the architecture or high-level design specify a specific set of error-handling techniques?
+-exceptions are propagated until the main method where they are handled by printing F
 Does the architecture or high-level design specify whether error handling should favor robustness or correctness?
+-the architecture favor robustness as even if the user's string input contains illegal characters,
+-the program merely removes those illegal character and still allows the program to function
 Have barricades been created to contain the damaging effect of errors and reduce the amount of code that has to be concerned about error processing?
-Have debugging aids been used in the code?
-Have debugging aids been installed in such a way that they can be activated or deactivated without a great deal of fuss?
+-yes, the sanitize method removes all illegal characters
 Is the amount of defensive programming code appropriate—neither too much nor too little?
+-there aren't too many assertions in the code
 Have you used offensive-programming techniques to make errors difficult to overlook during development?
--
+-made errors throw exceptions along with printing F.
+-so this way the exceptions loudly tell the presence of an unintended error when testing
+-while the production code catches this exception and prints out F
 
 Exceptions
 Has your project defined a standardized approach to exception handling?
