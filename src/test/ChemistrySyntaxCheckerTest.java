@@ -22,14 +22,6 @@ public class ChemistrySyntaxCheckerTest {
 	}
 	
 	/**
-	 * cases
-	 * 1. single element
-	 * H
-	 * 1a. single element with length 2
-	 * He
-	 * 1b. single element with length 3
-	 * Heh
-	 * 2. single element with coefficient
 	 * H3
 	 * 3. single element within parenthesis
 	 * (H)
@@ -44,14 +36,95 @@ public class ChemistrySyntaxCheckerTest {
 	 */
 
 	@Test
-	public void testSingleElement() throws IllegalElementException, IllegalParenthesisException{
+	public void testSingleElement_len1() throws IllegalElementException, IllegalParenthesisException{
 		try{
-			c.checkSyntax("c");
+			c.checkSyntax("C");
 		}
 		catch(Exception e){
 			fail();
 		}
 	}
+	
+	@Test
+	public void testSingleElement_len1_fail() throws IllegalElementException, IllegalParenthesisException{
+		try{
+			c.checkSyntax("c");
+			fail("should have thrown an exception");
+		}
+		catch(IllegalElementException e){
+		}
+	}
+	
+	@Test
+	public void testSingleElement_len2(){
+		try{
+			c.checkSyntax("He");
+		}
+		catch(Exception e){
+			fail();
+		}
+	}
+	
+	@Test
+	public void testSingleElement_len3(){
+		try{
+			c.checkSyntax("Heh");
+		}
+		catch(Exception e){
+			fail();
+		}
+	}
+	
+	@Test
+	public void testSingleElement_numberInFront(){
+		try{
+			c.checkSyntax("4H");
+		}
+		catch(Exception e){
+			fail();
+		}
+	}
+	
+	@Test
+	public void testSingleElement_numberInFrontLarge(){
+		try{
+			c.checkSyntax("99999999999999999H");
+		}
+		catch(Exception e){
+			fail();
+		}
+	}
+	
+	@Test
+	public void testSingleElement_coefficient(){
+		try{
+			c.checkSyntax("H9");
+		}
+		catch(Exception e){
+			fail();
+		}
+	}
+	
+	@Test
+	public void testSingleElement_coefficientLarge(){
+		try{
+			c.checkSyntax("H90000000");
+		}
+		catch(Exception e){
+			fail();
+		}
+	}
+	
+	@Test
+	public void testSingleElement_withinParenthesis(){
+		try{
+			c.checkSyntax("(C)");
+		}
+		catch(Exception e){
+			fail();
+		}
+	}
+	
 	@Test
 	public void testParenthesis() throws IllegalElementException, IllegalParenthesisException {
 		try{
