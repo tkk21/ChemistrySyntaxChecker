@@ -83,10 +83,16 @@ public class ChemicalSyntaxChecker {
 	/**
 	 * initializes ChemistrySyntaxChecker
 	 * 
-	 * upperLetter can place any character so that is set as initial value
-	 * even if user tries to close parenthesis first,
-	 * the parenthesis syntax checker separately handles that.
-	 * Thus, before character is initialized as upperLetter
+	 * The first character of a molecule should only take in
+	 * 1. Upper case letter
+	 * 2. Number
+	 * 3. Open parenthesis
+	 * 
+	 * Lower case letter and closed parenthesis are not allowed
+	 * Closed parenthesis is taken care of due to parenthesis count
+	 * To make sure that lower case letter cannot be first,
+	 * beforeCharacter is initialized as number
+	 * because number does not allow lower case letter after it
 	 */
 	public ChemicalSyntaxChecker () {
 		beforeCharacter = ChemicalCharacter.number;
