@@ -201,36 +201,6 @@ public class ChemistrySyntaxChecker {
 		beforeCharacter = ChemistryCharacterStatus.getCharacterClassification(c);
 	}
 
-	private void checkParenthesis (char c){
-		switch(c){
-		//parenthesis case
-		case '(':
-			parenthesisCount++;
-			break;
-		case ')':
-			if (parenthesisCount<1){
-				try {
-					throw new IllegalParenthesisException();
-				} catch (IllegalParenthesisException e) {
-					ExceptionUtils.failChemistry();
-				}
-			}
-			else{
-				parenthesisCount--;
-				afterClosedParenthesis = true;
-			}
-			break;
-
-		default:
-			checkCompoundValidity(c);
-			//call something else
-		}
-	}
-
-	private void checkCompoundValidity(char c){
-
-	}
-
 	private String sanitize(String s) {
 		String sanitized = s;
 		sanitized = sanitized.replaceAll(NOT_CHEMICALLY_VALID, "");
