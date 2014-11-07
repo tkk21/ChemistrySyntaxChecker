@@ -177,7 +177,7 @@ public class ChemicalSyntaxChecker {
 	 * If the letter count exceeds 3,
 	 * then an illegal element exception is thrown
 	 * @param c	the character for the next iteration
-	 * @throws IllegalElementException
+	 * @throws IllegalElementException	thrown if the letter count exceeds 3
 	 */
 	private void lowerLetterCase(char c) throws IllegalElementException {
 		//post processing of lower letter count
@@ -188,6 +188,11 @@ public class ChemicalSyntaxChecker {
 		updateBeforeLetterStatus(c);
 	}
 
+	/**
+	 * The case for numbers
+	 * @param c	the character for the next iteration
+	 * @throws IllegalElementException	thrown if next character is illegal
+	 */
 	private void numberCase(char c) throws IllegalElementException {
 		String s = "" + c;
 		if (s.matches(UPPER_LETTER+"|" + NUMBER+"|"+OPEN_PARENTHESIS+"|"+CLOSED_PARENTHESIS)){
