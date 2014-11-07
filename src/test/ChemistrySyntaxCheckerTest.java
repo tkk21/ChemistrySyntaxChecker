@@ -1,5 +1,12 @@
 package test;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+
+
+
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -190,6 +197,8 @@ public class ChemistrySyntaxCheckerTest {
 			fail();
 		}
 	}
+	
+	
 	@Test
 	public void testParenthesis() throws IllegalElementException, IllegalParenthesisException {
 		try{
@@ -231,11 +240,6 @@ public class ChemistrySyntaxCheckerTest {
 	}
 	
 	@Test
-	public void testRegex() {
-		
-	}
-	
-	@Test
 	public void testEdge() throws IllegalElementException, IllegalParenthesisException {
 		try{
 			c.checkSyntax("Cooo");
@@ -243,5 +247,30 @@ public class ChemistrySyntaxCheckerTest {
 		}
 		catch(IllegalElementException e){
 		}
+	}
+	
+	@Test
+	public void testRegex() throws IllegalParenthesisException {
+		try{
+			c.checkSyntax("[$#St]");
+			c.checkSyntax("[\\w]");
+		}
+		catch(Exception e){
+			fail();
+		}
+	}
+	
+	@Test
+	public void testSanitize_regex() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		assertEquals("St", reflectSanitize("[$#St]"));
+		assertEquals("w", reflectSanitize("[\\w]"));
+		
+	}
+	
+	String reflectSanitize(String s) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+		Method method = ChemicalSyntaxChecker.class.getDeclaredMethod
+				("sanitize", String.class);
+		method.setAccessible(true);
+		return (String)method.invoke(c, s);
 	}
 }
