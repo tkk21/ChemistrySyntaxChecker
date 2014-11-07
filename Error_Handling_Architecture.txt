@@ -1,0 +1,53 @@
+Error-Handling Architecture
+1. All user inputs are sanitized so that only a-z, A-Z, 0-9, (, and ) are allowed.
+other characters are simply removed
+2. All exceptions thrown in the syntax checker class are propagated until the
+main method in the Chemistry class.
+Then they are caught, F is printed, and program exits
+3. 
+
+DEFENSIVE PROGRAMMING checklist
+General
+Does the routine protect itself from bad input data?
+-User's raw input is sanitized so that only a certain range of characters remain
+Have you used assertions to document assumptions, including preconditions and postconditions?
+-
+Have assertions been used only to document conditions that should never occur?
+Does the architecture or high-level design specify a specific set of error-handling techniques?
+Does the architecture or high-level design specify whether error handling should favor robustness or correctness?
+Have barricades been created to contain the damaging effect of errors and reduce the amount of code that has to be concerned about error processing?
+Have debugging aids been used in the code?
+Have debugging aids been installed in such a way that they can be activated or deactivated without a great deal of fuss?
+Is the amount of defensive programming code appropriate—neither too much nor too little?
+Have you used offensive-programming techniques to make errors difficult to overlook during development?
+-
+
+Exceptions
+Has your project defined a standardized approach to exception handling?
+-Yes, all errors throw a detailed exception which are caught in the main method of Chemistry
+-then the program prints out F and exits
+Have you considered alternatives to using an exception?
+-The alternative would have been to simply exit the program without any detail.
+-By throwing exceptions that are caught in the main method, we have a central point of error handling
+-and a bit of details on what the error is 
+Is the error handled locally rather than throwing a nonlocal exception, if possible?
+-As stated in the architecture, exceptions are handled in the main method
+Does the code avoid throwing exceptions in constructors and destructors?
+-Only ChemicalSyntaxChecker has non-empty constructor and only primitive fields are set
+Are all exceptions at the appropriate levels of abstraction for the routines that throw them?
+-Syntax checker should throw IllegalElementException and IllegalParenthesisException
+-Chemistry class merely catches them
+Does each exception include all relevant exception background information?
+-Exceptions are thrown with useful messages
+Is the code free of empty catch blocks? (Or if an empty catch block truly is appropriate, is it documented?)
+-Production code is free of empty catch blocks.
+
+Security Issues
+Does the code that checks for bad input data check for attempted buffer overflows, SQL injection, HTML injection, integer overflows, and other malicious inputs?
+-Inputs are sanitized and thus the code is barricaded from such malicious inputs
+Are all error-return codes checked?
+
+Are all exceptions caught?
+-All exception are passed on until the main method where they are caught
+Do error messages avoid providing information that would help an attacker break into the system?
+-No stacktraces remain in the final code
