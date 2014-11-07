@@ -37,9 +37,16 @@ public class ChemistrySyntaxCheckerTest {
 	 * (H)2
 	 * 5. single element with coefficient within parenthesis with coefficient
 	 * (H2)4 
+	 * 6. single element with number in front of it
+	 * 4H
+	 * @throws IllegalParenthesisException 
+	 * @throws IllegalElementException 
 	 */
-	
-	
+
+	@Test
+	public void testSingleElement() throws IllegalElementException, IllegalParenthesisException{
+		c.checkSyntax("c");
+	}
 	@Test
 	public void testParenthesis() throws IllegalElementException, IllegalParenthesisException {
 		c.checkSyntax("(H)");
@@ -57,12 +64,7 @@ public class ChemistrySyntaxCheckerTest {
 	
 	@Test
 	public void testSpecialCharacter() throws IllegalElementException, IllegalParenthesisException {
-		try{
 		c.checkSyntax("$H 2");
-		fail("should have thrown an illegal element exception");
-		}
-		catch(IllegalElementException e){
-		}
 	}
 	
 	@Test
