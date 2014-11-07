@@ -22,6 +22,11 @@ public class ChemistrySyntaxCheckerTest {
 	public void testParenthesis() {
 		c.checkSyntax("(H)");
 	}
+	
+	@Test
+	public void testIllegalElement() {
+		c.checkSyntax("H2o");
+	}
 	@Test
 	public void testSpecialCharacter() {
 
