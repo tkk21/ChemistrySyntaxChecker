@@ -198,11 +198,40 @@ public class ChemistrySyntaxCheckerTest {
 		}
 	}
 	
+	@Test
+	public void testMultipleElement_len2Elements(){
+		try{
+			c.checkSyntax("QeTr3De");
+		}
+		catch(Exception e){
+			fail();
+		}
+	}
 	
 	@Test
 	public void testParenthesis() throws IllegalElementException, IllegalParenthesisException {
 		try{
 			c.checkSyntax("(H)");
+		}
+		catch(Exception e){
+			fail();
+		}
+	}
+	
+	@Test
+	public void testMultipleParenthesis(){
+		try{
+			c.checkSyntax("(H)(He)(Ht)");
+		}
+		catch(Exception e){
+			fail();
+		}
+	}
+	
+	@Test
+	public void testMultipleParenthesis_nested(){
+		try{
+			c.checkSyntax("(H(He)Ht)");
 		}
 		catch(Exception e){
 			fail();
