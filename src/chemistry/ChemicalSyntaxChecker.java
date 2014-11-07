@@ -289,6 +289,7 @@ public class ChemicalSyntaxChecker {
 	 */
 	private void updateBeforeLetterStatus(char c) {
 		beforeCharacter = ChemicalCharacter.getCharacterClassification(c);
+		assert(beforeCharacter != null);
 	}
 
 	/**
