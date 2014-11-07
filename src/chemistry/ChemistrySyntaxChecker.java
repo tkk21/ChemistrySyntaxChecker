@@ -1,12 +1,16 @@
 package chemistry;
 
-
+/**
+ * a class that checks the chemical syntax of an input string
+ * 
+ * @author ted
+ *
+ */
 public class ChemistrySyntaxChecker {
 
 	public enum ChemistryCharacterStatus{
 		openParenthesis, closedParenthesis, 
 		upperLetter, lowerLetter, number;
-
 
 		public static ChemistryCharacterStatus getCharacterClassification(char c){
 			String s = ""+c;
@@ -50,7 +54,6 @@ public class ChemistrySyntaxChecker {
 
 	public static final String CHEMICALLY_VALID = "[a-zA-Z0-9(-)]";
 	public static final String NOT_CHEMICALLY_VALID = "[^a-zA-Z0-9(-)]";
-
 
 	/**
 	 * 
@@ -202,11 +205,14 @@ public class ChemistrySyntaxChecker {
 	}
 
 	private String sanitize(String s) {
+		try{
+			ExceptionUtils.checkNulls(s);
+		}
+		catch(NullPointerException e){
+			ExceptionUtils.failChemistry();
+		}
 		String sanitized = s;
 		sanitized = sanitized.replaceAll(NOT_CHEMICALLY_VALID, "");
 		return sanitized;
 	}
-
 }
-
-
