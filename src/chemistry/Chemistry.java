@@ -49,6 +49,7 @@ public class Chemistry {
 		}
 		ChemistrySyntaxChecker check = new ChemistrySyntaxChecker();
 		check.checkSyntax(args[0]);
+		System.out.println("T");//went through the syntax check without failing
 	}
 	
 	/**
