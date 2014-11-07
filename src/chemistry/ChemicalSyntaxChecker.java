@@ -203,6 +203,12 @@ public class ChemicalSyntaxChecker {
 		}
 	}
 	
+	/**
+	 * The case for parenthesis
+	 * @param c	the character for the next iteration
+	 * @throws IllegalParenthesisException thrown if there is a closed parenthesis without an open parenthesis 
+	 * @throws IllegalElementException	thrown if next character is illegal
+	 */
 	private void parenthesisCase(char c) throws IllegalParenthesisException, IllegalElementException{
 		switch(beforeCharacter){
 		//capital letter (H)
@@ -223,6 +229,12 @@ public class ChemicalSyntaxChecker {
 		}
 	}
 
+	/**
+	 * The case for open parenthesis
+	 * increments openParenthesis count by 1
+	 * @param c	the character for the next iteration
+	 * @throws IllegalElementException	thrown if next character is illegal
+	 */
 	private void openParenthesisCase(char c)
 			throws IllegalElementException {
 		String s = "" + c;
@@ -235,6 +247,15 @@ public class ChemicalSyntaxChecker {
 		}
 	}
 	
+	/**
+	 * The case for closed parenthesis
+	 * @param c	the character for the next iteration
+	 * decrements openParenthesis count by 1
+	 * if the count goes below 0,
+	 * an illegal parenthesis exception is thrown
+	 * @throws IllegalParenthesisException	thrown if there is a closed parenthesis without an open parenthesis
+	 * @throws IllegalElementException	thrown if next character is illegal
+	 */
 	private void closedParenthesisCase(char c)
 			throws IllegalParenthesisException, IllegalElementException {
 		String s = "" + c;
@@ -249,11 +270,20 @@ public class ChemicalSyntaxChecker {
 			throw new IllegalElementException();
 		}
 	}
-	
+
+	/**
+	 * updates the before character field with the character for the next iteration
+	 * @param c	the character for the next iteration
+	 */
 	private void updateBeforeLetterStatus(char c) {
 		beforeCharacter = ChemicalCharacter.getCharacterClassification(c);
 	}
 
+	/**
+	 * sanitizes the user input so that all illegal characters are removed
+	 * @param s	the user input
+	 * @return	the string that is sanitized
+	 */
 	private String sanitize(String s) {
 		ExceptionUtils.checkIllegalString(s);
 		String sanitized = s;
