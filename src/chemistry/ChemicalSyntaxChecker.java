@@ -231,6 +231,7 @@ public class ChemicalSyntaxChecker {
 			closedParenthesisCase(c);
 			break;
 		default:
+			throw new IllegalElementException("The string was not sanitized somehow");
 			
 		}
 	}
