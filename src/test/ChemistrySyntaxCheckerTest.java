@@ -21,20 +21,6 @@ public class ChemistrySyntaxCheckerTest {
 		c = new ChemicalSyntaxChecker();
 	}
 	
-	/**
-	 * H3
-	 * 3. single element within parenthesis
-	 * (H)
-	 * 4. single element within parenthesis with coefficient
-	 * (H)2
-	 * 5. single element with coefficient within parenthesis with coefficient
-	 * (H2)4 
-	 * 6. single element with number in front of it
-	 * 4H
-	 * @throws IllegalParenthesisException 
-	 * @throws IllegalElementException 
-	 */
-
 	@Test
 	public void testSingleElement_len1() throws IllegalElementException, IllegalParenthesisException{
 		try{
@@ -119,6 +105,46 @@ public class ChemistrySyntaxCheckerTest {
 	public void testSingleElement_withinParenthesis(){
 		try{
 			c.checkSyntax("(C)");
+		}
+		catch(Exception e){
+			fail();
+		}
+	}
+	
+	@Test
+	public void testSingleElement_withinParenthesis_thatHasCoefficient(){
+		try{
+			c.checkSyntax("(C)3");
+		}
+		catch(Exception e){
+			fail();
+		}
+	}
+	
+	@Test
+	public void testSingleElement_withinParenthesis_thatHasCoefficient_large(){
+		try{
+			c.checkSyntax("(C)333333333333333");
+		}
+		catch(Exception e){
+			fail();
+		}
+	}
+	
+	@Test
+	public void testSingleElement_coefficient_withinParenthesis_thatHasCoefficient(){
+		try{
+			c.checkSyntax("(C4)3");
+		}
+		catch(Exception e){
+			fail();
+		}
+	}
+	
+	@Test
+	public void testSingleElement_coefficient_withinParenthesis_thatHasCoefficient_large(){
+		try{
+			c.checkSyntax("(C44444)333333");
 		}
 		catch(Exception e){
 			fail();
