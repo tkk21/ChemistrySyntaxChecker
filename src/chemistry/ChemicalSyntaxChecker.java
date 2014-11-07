@@ -175,7 +175,7 @@ public class ChemicalSyntaxChecker {
 	private void upperLetterCase(char c) {
 		assert(beforeCharacter == ChemicalCharacter.upperLetter);
 		letterCount=1;
-		updateBeforeLetterStatus(c);
+		updateBeforeLetter(c);
 	}
 
 	/**
@@ -193,7 +193,7 @@ public class ChemicalSyntaxChecker {
 		if (letterCount>3){
 			throw new IllegalElementException("Element with length greater than 3");
 		}
-		updateBeforeLetterStatus(c);
+		updateBeforeLetter(c);
 	}
 
 	/**
@@ -205,7 +205,7 @@ public class ChemicalSyntaxChecker {
 		assert(beforeCharacter == ChemicalCharacter.number);
 		String s = "" + c;
 		if (s.matches(UPPER_LETTER+"|" + NUMBER+"|"+OPEN_PARENTHESIS+"|"+CLOSED_PARENTHESIS)){
-			updateBeforeLetterStatus(c);
+			updateBeforeLetter(c);
 		}
 		else{
 			throw new IllegalElementException("Lower case letter after a number");
@@ -251,7 +251,7 @@ public class ChemicalSyntaxChecker {
 		String s = "" + c;
 		openParenthesisCount++;
 		if (s.matches(UPPER_LETTER+"|"+NUMBER+"|"+OPEN_PARENTHESIS)){
-			updateBeforeLetterStatus(c);
+			updateBeforeLetter(c);
 		}
 		else{
 			throw new IllegalElementException("Illegal character after an open parenthesis");
@@ -276,7 +276,7 @@ public class ChemicalSyntaxChecker {
 			throw new IllegalParenthesisException("Tried to close a parenthesis when there was not an open parenthesis");
 		}
 		if (s.matches(UPPER_LETTER+"|"+NUMBER+"|"+OPEN_PARENTHESIS+"|"+CLOSED_PARENTHESIS)){
-			updateBeforeLetterStatus(c);
+			updateBeforeLetter(c);
 		}
 		else{
 			throw new IllegalElementException("Illegal character after a closed parenthesis");
@@ -287,7 +287,7 @@ public class ChemicalSyntaxChecker {
 	 * updates the before character field with the character for the next iteration
 	 * @param c	the character for the next iteration
 	 */
-	private void updateBeforeLetterStatus(char c) {
+	private void updateBeforeLetter(char c) {
 		beforeCharacter = ChemicalCharacter.getCharacterClassification(c);
 		assert(beforeCharacter != null);
 	}
