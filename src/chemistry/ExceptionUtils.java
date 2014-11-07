@@ -27,21 +27,10 @@ public class ExceptionUtils {
 			ExceptionUtils.checkNulls(s);//throw NPE if input is null
 		}
 		catch(NullPointerException e){
-			failChemistry();
+			Chemistry.failChemistry();
 		}
 		if (s.length()==0){
-			failChemistry();
+			Chemistry.failChemistry();
 		}
-	}
-	
-	/**
-	 * a possible room for hacking
-	 * is this a safe thing to do?
-	 * 
-	 * can someone prematurely exit the program using this?  
-	 */
-	public static void failChemistry (){
-		System.out.println("F");
-		System.exit(0);//what status to exit with?
 	}
 }

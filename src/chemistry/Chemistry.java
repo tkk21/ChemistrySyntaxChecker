@@ -43,6 +43,22 @@ public class Chemistry {
 		 * make sure main is the only entry point to chemistry
 		 */
 		//document error handling architecture
+		if (args.length<1){
+			failChemistry();
+			return;
+		}
+		ChemistrySyntaxChecker check = new ChemistrySyntaxChecker();
+		check.checkSyntax(args[0]);
 	}
-
+	
+	/**
+	 * a possible room for hacking
+	 * is this a safe thing to do?
+	 * 
+	 * can someone prematurely exit the program using this?  
+	 */
+	public static void failChemistry() {
+		System.out.println("F");
+		System.exit(0);
+	}
 }

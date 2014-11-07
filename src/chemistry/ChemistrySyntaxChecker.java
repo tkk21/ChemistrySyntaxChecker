@@ -76,10 +76,10 @@ public class ChemistrySyntaxChecker {
 				processChemistrySyntax(s.charAt(i));
 			} 
 			catch (IllegalElementException e) {
-				ExceptionUtils.failChemistry();
+				Chemistry.failChemistry();
 			}
 			catch (IllegalParenthesisException e){
-				ExceptionUtils.failChemistry();
+				Chemistry.failChemistry();
 			}
 		}
 		if (parenthesisCount>0){
@@ -87,7 +87,7 @@ public class ChemistrySyntaxChecker {
 				throw new IllegalParenthesisException();
 			} 
 			catch (IllegalParenthesisException e) {
-				ExceptionUtils.failChemistry();
+				Chemistry.failChemistry();
 			}
 		}
 	}
@@ -205,12 +205,7 @@ public class ChemistrySyntaxChecker {
 	}
 
 	private String sanitize(String s) {
-		try{
-			ExceptionUtils.checkNulls(s);
-		}
-		catch(NullPointerException e){
-			ExceptionUtils.failChemistry();
-		}
+		ExceptionUtils.checkIllegalString(s);
 		String sanitized = s;
 		sanitized = sanitized.replaceAll(NOT_CHEMICALLY_VALID, "");
 		return sanitized;
