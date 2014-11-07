@@ -173,6 +173,7 @@ public class ChemicalSyntaxChecker {
 	 * @param c	the character for the next iteration
 	 */
 	private void upperLetterCase(char c) {
+		assert(beforeCharacter == ChemicalCharacter.upperLetter);
 		letterCount=1;
 		updateBeforeLetterStatus(c);
 	}
@@ -186,6 +187,7 @@ public class ChemicalSyntaxChecker {
 	 * @throws IllegalElementException	thrown if the letter count exceeds 3
 	 */
 	private void lowerLetterCase(char c) throws IllegalElementException {
+		assert(beforeCharacter == ChemicalCharacter.lowerLetter);
 		//post processing of lower letter count
 		letterCount++;
 		if (letterCount>3){
@@ -200,6 +202,7 @@ public class ChemicalSyntaxChecker {
 	 * @throws IllegalElementException	thrown if next character is illegal
 	 */
 	private void numberCase(char c) throws IllegalElementException {
+		assert(beforeCharacter == ChemicalCharacter.number);
 		String s = "" + c;
 		if (s.matches(UPPER_LETTER+"|" + NUMBER+"|"+OPEN_PARENTHESIS+"|"+CLOSED_PARENTHESIS)){
 			updateBeforeLetterStatus(c);
@@ -244,6 +247,7 @@ public class ChemicalSyntaxChecker {
 	 */
 	private void openParenthesisCase(char c)
 			throws IllegalElementException {
+		assert(beforeCharacter == ChemicalCharacter.openParenthesis);
 		String s = "" + c;
 		openParenthesisCount++;
 		if (s.matches(UPPER_LETTER+"|"+NUMBER+"|"+OPEN_PARENTHESIS)){
@@ -265,6 +269,7 @@ public class ChemicalSyntaxChecker {
 	 */
 	private void closedParenthesisCase(char c)
 			throws IllegalParenthesisException, IllegalElementException {
+		assert(beforeCharacter == ChemicalCharacter.closedParenthesis);
 		String s = "" + c;
 		openParenthesisCount--;
 		if (openParenthesisCount<0){
