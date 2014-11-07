@@ -38,26 +38,15 @@ public class ChemistrySyntaxChecker {
 		}
 	}
 
-	private boolean firstCharacter;
-
-	private int parenthesisCount;
-
-	private boolean afterOpenParenthesis; 
-	private boolean afterClosedParenthesis;
-
-	private boolean afterLetter;
-	private boolean afterStartElement;
-
 	private ChemistryCharacterStatus beforeCharacter;
+	private int parenthesisCount;
 	private int letterCount;
-
-	private boolean afterNumber;
 
 	public static final String LOWER_LETTER = "[a-z]";
 	public static final String UPPER_LETTER = "[A-Z]";
 	public static final String NUMBER = "[0-9]";
-	public static final String OPEN_PARENTHESIS = "(";
-	public static final String CLOSED_PARENTHESIS = ")";
+	public static final String OPEN_PARENTHESIS = "[(]";
+	public static final String CLOSED_PARENTHESIS = "[)]";
 
 	public static final String CHEMICALLY_VALID = "[a-zA-Z0-9(-)]";
 	public static final String NOT_CHEMICALLY_VALID = "[^a-zA-Z0-9(-)]";
@@ -72,35 +61,36 @@ public class ChemistrySyntaxChecker {
 	 */
 	public ChemistrySyntaxChecker () {
 		beforeCharacter = ChemistryCharacterStatus.upperLetter;
-
-		firstCharacter = true;
-
 		parenthesisCount = 0;
 		letterCount = 0;
-
-		afterClosedParenthesis = false;
-		afterLetter = false;
-		afterStartElement = false;
-
-		afterNumber = false;
 	}
 
 	public void checkSyntax(String s) {
-		System.out.println(sanitize(s));
 		s = sanitize(s);
 
 		for (int i = 0; i<s.length(); i++){
 			try {
 				processChemistrySyntax(s.charAt(i));
-			} catch (IllegalElementException e) {
+			} 
+			catch (IllegalElementException e) {
 				ExceptionUtils.failChemistry();
 			}
-//			checkParenthesis(s.charAt(i));
+			catch (IllegalParenthesisException e){
+				ExceptionUtils.failChemistry();
+			}
+		}
+		if (parenthesisCount>0){
+			try {
+				throw new IllegalParenthesisException();
+			} 
+			catch (IllegalParenthesisException e) {
+				ExceptionUtils.failChemistry();
+			}
 		}
 	}
 
 
-	private void processChemistrySyntax(char c) throws IllegalElementException{
+	private void processChemistrySyntax(char c) throws IllegalElementException, IllegalParenthesisException{
 		switch(beforeCharacter){
 		//anything allowed
 
@@ -128,18 +118,15 @@ public class ChemistrySyntaxChecker {
 		//open parenthesis H2(O)
 		//close parenthesis (O2)
 		case number:
-			String s = "" + c;
-			if (s.matches(UPPER_LETTER+"|" + NUMBER+"|"+OPEN_PARENTHESIS+"|"+CLOSED_PARENTHESIS)){
-				updateBeforeLetterStatus(c);
-			}
-			else{
-				throw new IllegalElementException();
-			}
+			numberCase(c);
 			break;
 		default:
-
+			parenthesisCase(c);
 		}
 	}
+
+	
+	
 	private void upperLetterCase(char c) {
 		updateBeforeLetterStatus(c);
 	}
@@ -153,35 +140,67 @@ public class ChemistrySyntaxChecker {
 		updateBeforeLetterStatus(c);
 	}
 
+	private void numberCase(char c) throws IllegalElementException {
+		String s = "" + c;
+		if (s.matches(UPPER_LETTER+"|" + NUMBER+"|"+OPEN_PARENTHESIS+"|"+CLOSED_PARENTHESIS)){
+			updateBeforeLetterStatus(c);
+		}
+		else{
+			throw new IllegalElementException();
+		}
+	}
+	
+	private void parenthesisCase(char c) throws IllegalParenthesisException, IllegalElementException{
+		switch(beforeCharacter){
+		//capital letter (H)
+		//number (3Co)
+		//open parenthesis ((He))
+		case openParenthesis:
+			openParenthesisCase(c);
+			break;
+		//capital letter (He)O
+		//number (He)3
+		//open parenthesis (He)(Ho)
+		//closed parenthesis ((He))
+		case closedParenthesis:
+			closedParenthesisCase(c);
+			break;
+		default:
+			
+		}
+	}
+
+	private void openParenthesisCase(char c)
+			throws IllegalElementException {
+		String s = "" + c;
+		parenthesisCount++;
+		if (s.matches(UPPER_LETTER+"|"+NUMBER+"|"+OPEN_PARENTHESIS)){
+			updateBeforeLetterStatus(c);
+		}
+		else{
+			throw new IllegalElementException();
+		}
+	}
+	
+	private void closedParenthesisCase(char c)
+			throws IllegalParenthesisException, IllegalElementException {
+		String s = "" + c;
+		parenthesisCount--;
+		if (parenthesisCount<0){
+			throw new IllegalParenthesisException();
+		}
+		if (s.matches(UPPER_LETTER+"|"+NUMBER+"|"+OPEN_PARENTHESIS+"|"+CLOSED_PARENTHESIS)){
+			updateBeforeLetterStatus(c);
+		}
+		else{
+			throw new IllegalElementException();
+		}
+	}
+	
 	private void updateBeforeLetterStatus(char c) {
 		beforeCharacter = ChemistryCharacterStatus.getCharacterClassification(c);
 	}
 
-
-	private void legalChars(){
-		if (afterStartElement){
-
-		}
-		if (afterLetter){
-
-		}
-		if (afterNumber){
-		}
-		if (afterOpenParenthesis){
-			//capital letter (H)
-			//number (3Co)
-			//open parenthesis ((He))
-		}
-		if (afterClosedParenthesis){
-			//capital letter (He)O
-			//number (He)3
-			//parenthesis (He)(Ho)
-		}
-	}
-
-	private void startElement(){
-
-	}
 	private void checkParenthesis (char c){
 		switch(c){
 		//parenthesis case
