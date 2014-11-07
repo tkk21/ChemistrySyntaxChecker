@@ -45,11 +45,21 @@ public class ChemistrySyntaxCheckerTest {
 
 	@Test
 	public void testSingleElement() throws IllegalElementException, IllegalParenthesisException{
-		c.checkSyntax("c");
+		try{
+			c.checkSyntax("c");
+		}
+		catch(Exception e){
+			fail();
+		}
 	}
 	@Test
 	public void testParenthesis() throws IllegalElementException, IllegalParenthesisException {
-		c.checkSyntax("(H)");
+		try{
+			c.checkSyntax("(H)");
+		}
+		catch(Exception e){
+			fail();
+		}
 	}
 	
 	@Test
@@ -64,7 +74,12 @@ public class ChemistrySyntaxCheckerTest {
 	
 	@Test
 	public void testSpecialCharacter() throws IllegalElementException, IllegalParenthesisException {
-		c.checkSyntax("$H 2");
+		try{
+			c.checkSyntax("$H 2");
+		}
+		catch(Exception e){
+			fail();
+		}
 	}
 	
 	@Test
